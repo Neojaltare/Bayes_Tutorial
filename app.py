@@ -748,6 +748,7 @@ with col_l1:
     ax_l1.text(beta_hat, ax_l1.get_ylim()[1]*0.9, f'  MLE = {beta_hat:.3f}', 
                fontsize=10, color='darkorange', fontweight='bold')
     ax_l1.legend(fontsize=10)
+    ax_l1.set_xlim(-5, 5)
     ax_l1.grid(True, alpha=0.3)
     st.pyplot(fig_l1)
 
@@ -763,6 +764,7 @@ with col_l2:
     ax_l2.text(alpha_hat, ax_l2.get_ylim()[1]*0.9, f'  MLE = {alpha_hat:.3f}', 
                fontsize=10, color='darkorange', fontweight='bold')
     ax_l2.legend(fontsize=10)
+    ax_l2.set_xlim(-5, 5)
     ax_l2.grid(True, alpha=0.3)
     st.pyplot(fig_l2)
 
