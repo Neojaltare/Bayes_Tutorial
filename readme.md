@@ -37,7 +37,7 @@ streamlit run app.py
 
 The app will open in your default web browser at `http://localhost:8501`
 
-## How to Use for Presentations
+## How to Use
 
 ### Section Flow:
 
