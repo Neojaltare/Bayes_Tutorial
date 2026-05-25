@@ -39,6 +39,18 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
+
+def sidebar_try_this(section: str, controls: str, extra: str = "") -> None:
+    """Short callout: which sidebar block controls the plots below."""
+    msg = (
+        f"**Try this:** Open the **sidebar** (arrow at top-left if it is hidden). "
+        f"Scroll to **{section}** and adjust: {controls}."
+    )
+    if extra:
+        msg += f" {extra}"
+    st.info(msg)
+
+
 # ============================================================================
 # HELPER FUNCTIONS
 # ============================================================================
@@ -355,6 +367,12 @@ The frequentist framework gives us:
 - But **no probability distribution** over the parameters themselves
 """)
 
+sidebar_try_this(
+    "Data Generation",
+    "**Sample size (n)**, **True intercept (α_true)**, **True slope (β_true)**, **Noise std dev (σ)**",
+    "These plots update when you change the data or click **Regenerate Data**.",
+)
+
 col1, col2 = st.columns([1.5, 1])
 
 with col1:
@@ -504,9 +522,9 @@ st.markdown("## The Bayesian Approach")
 st.markdown("### There are three key components to the Bayesian approach:")
 
 st.markdown("### Prior → Likelihood → Posterior")
+st.markdown("### We will now look at each of these components in more detail:")
 
-
-st.markdown("<div style='margin-bottom:100px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
 st.markdown("---")
 st.markdown("## Understanding the Prior")
 
@@ -526,6 +544,16 @@ st.markdown(f"""
 st.markdown("---")
 # ROW 1: PRIORS
 st.markdown("**Prior Distributions** — Our initial beliefs before seeing data")
+sidebar_try_this(
+    "Bayesian Prior - Slope",
+    "**Prior mean for slope (μ_β)** and **Prior std dev for slope (τ_β)** — shapes the blue slope prior below",
+    "You can then also play around with the **Prior mean for intercept (μ_α)** and **Prior std dev for intercept (τ_α)** — shapes the blue intercept prior below\n\n"
+    "Notice that both the slope and the intercept are both full distributions (here gaussian), parameterised by a mean and a standard deviation. In the frequentist approach, we only had point estimates and confidence intervals for the slope and the intercept."
+)
+# sidebar_try_this(
+#     "Bayesian Prior - Intercept",
+#     "**Prior mean for intercept (μ_α)** and **Prior std dev for intercept (τ_α)** — shapes the blue intercept prior below",
+# )
 col_p1, col_p2 = st.columns(2)
 
 with col_p1:
@@ -562,9 +590,15 @@ with col_p2:
 
 
 # Add this as a new subsection right after the frequentist section or before the Bayesian section
-st.markdown("<div style='margin-bottom:170px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
 st.markdown("---")
 st.markdown("## Understanding the Likelihood")
+
+sidebar_try_this(
+    "Parameters for the Likelihood",
+    "**Intercept (α)** and **Slope (β)** — move the regression line and the bell curves in the plot below",
+    "\n\nThe bell curves show you how likely each data point is, given the parameter values. Try and see if you can find the parameter values that make the data most likely.\n\nAfter you have explored this a bit, you can go back to the **Data Generation** section in the sidebar and play around with the data generation parameters to see how the likelihood changes."
+)
 
 st.markdown(f"""
 - **Likelihood:** y | α, β ~ N(α + β·x, {sigma}²) — same data model as frequentist approach
@@ -732,6 +766,11 @@ This is why the likelihood peaks near the OLS estimates — they minimize the su
 
 # ROW 2: LIKELIHOODS
 st.markdown("**Likelihood Functions** — What the data tells us (normalized for visualization)")
+sidebar_try_this(
+    "Data Generation",
+    "**Sample size (n)**, **True intercept (α_true)**, **True slope (β_true)**, **Noise std dev (σ)**, and **Regenerate Data**",
+    "\n\nYou will see that the orange curves (the likelihoods) are determined by the observed data. What happens when you increase the noise level (σ)?",
+)
 
 # First show the marginal likelihoods
 col_l1, col_l2 = st.columns(2)
@@ -850,10 +889,17 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ROW 3: POSTERIORS
-st.markdown("<div style='margin-bottom:170px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
 st.markdown("---")
 st.markdown("## Understanding the Posterior")
 st.markdown("**Posterior Distributions** — Updated beliefs after combining prior and likelihood")
+
+sidebar_try_this(
+    "Bayesian Prior - Slope",
+    "**Prior mean for slope (μ_β)** and **Prior std dev for slope (τ_β)** as well as the **Prior mean for intercept (μ_α)** and **Prior std dev for intercept (τ_α)**\n",
+    "Similarly, also play around with the various Data Generation parameters to see how they affect the posterior."
+    "The green and purple curves (the posteriors) are the result of combining the prior and the likelihood, resulting in a full posteriordistribution."
+)
 
 st.markdown(f"""
 - **Posteriors:** 
@@ -908,12 +954,22 @@ with col_po2:
 # ============================================================================
 # BAYESIAN VISUALIZATIONS
 # ============================================================================
-st.markdown("<div style='margin-bottom:170px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
 
 st.markdown("### Bayesian Inference: Putting it together")
 
 # Create two plots side by side for slope and intercept - COMBINED VIEW
 st.markdown("#### Prior → Likelihood → Posterior for Slope and Intercept")
+
+
+st.info(
+    "**Try this:** Open the **sidebar** (arrow at top-left if it is hidden). "
+    "Scroll to these sections and adjust the controls:\n\n"
+    "- **Bayesian Prior - Slope:** **Prior mean for slope (μ_β)** and **Prior std dev for slope (τ_β)** — blue prior curve for β\n"
+    "- **Bayesian Prior - Intercept:** **Prior mean for intercept (μ_α)** and **Prior std dev for intercept (τ_α)** — blue prior curve for α\n"
+    "- **Data Generation:** **Sample size (n)**, **σ**, and **Regenerate Data**. "
+    "Orange (likelihood) and green/purple (posterior) curves respond to the data."
+)
 
 col_beta, col_alpha = st.columns(2)
 
@@ -996,7 +1052,7 @@ st.markdown(f"""
 
 
 
-st.markdown("<div style='margin-bottom:170px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
 
 st.markdown("""
 ## Bayes' Theorem: The Foundation of Bayesian Inference
@@ -1043,8 +1099,17 @@ with col_bayes2:
 # ============================================================================
 # COMPARISON OF REGRESSION LINES
 # ============================================================================
-st.markdown("<div style='margin-bottom:170px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
 st.markdown("### Comparing Frequentist vs Bayesian Estimates")
+st.info(
+    "**Try this:** Open the **sidebar** (arrow at top-left if it is hidden). "
+    "Scroll to these sections and adjust the controls:\n\n"
+    "- **Data Generation:** **Sample size (n)**, **α_true**, **β_true**, **σ**, and **Regenerate Data**\n"
+    "- **Bayesian Prior - Slope:** **Prior mean for slope (μ_β)** and **Prior std dev for slope (τ_β)**. "
+    "Watch how the green Bayesian line shifts relative to the blue frequentist line.\n"
+    "- **Bayesian Prior - Intercept:** **Prior mean for intercept (μ_α)** and **Prior std dev for intercept (τ_α)**"
+    "\n\nDo you see much of a difference between the frequentist and the Bayesian approach? Try and play around with the various prior parameters to see how they affect the estimates. Do they ever diverge? If so, what causes them to diverge?"
+)
 
 col3, col4 = st.columns([1.5, 1])
 
@@ -1108,8 +1173,14 @@ with col4:
 
 
 # ROW 2: Comparison of impact on posterior
-st.markdown("<div style='margin-bottom:150px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-bottom:50px;'></div>", unsafe_allow_html=True)
 st.markdown("## Impact of Priors on Posterior Estimates")
+
+st.info(
+    "**Note:** The three panels below use a **fixed illustrative example** (not the sidebar sliders). "
+    "To explore prior strength on *your* data interactively, scroll the sidebar to "
+    "**Bayesian Prior - Slope** and change **τ_β** while viewing the posterior plots above."
+)
 
 st.markdown("""
 Let's see how these different priors affect the posterior when combined with the same data.
@@ -1222,6 +1293,15 @@ without imposing strong beliefs, and are robust to prior misspecification.
 st.markdown("<div style='margin-bottom:150px;'></div>", unsafe_allow_html=True)
 st.markdown("### Making Probability Statements (Bayesian Advantage)")
 
+st.info(
+    "**Try this:** Open the **sidebar** (arrow at top-left if it is hidden). "
+    "Scroll to these sections and adjust the controls:\n\n"
+    "- **Bayesian Prior - Slope:** **Prior mean for slope (μ_β)** and **Prior std dev for slope (τ_β)**. "
+    "These set the posterior used for the credible interval below.\n"
+    "- **Model Comparison - Bayes Factor:** **Null hypothesis value (β₀)** — used in **P(β > β₀ | data)** on the right\n"
+    "- **Data Generation:** **n**, **σ**, and **Regenerate Data**"
+)
+
 col5, col6 = st.columns(2)
 
 with col5:
@@ -1255,6 +1335,11 @@ with col6:
 st.markdown("<div style='margin-bottom:170px;'></div>", unsafe_allow_html=True)
 
 st.markdown("### Common Prior Distributions")
+
+sidebar_try_this(
+    "Example Prior Parameters",
+    "under **Gaussian**: **Gaussian mean** and **Gaussian std**; under **Uniform**: **Uniform lower** and **Uniform upper**; under **Beta**: **Beta α** and **Beta β**",
+)
 
 col_info1, col_info2, col_info3 = st.columns(3)
 
@@ -1344,6 +1429,11 @@ with col_info3:
 
 # Add a second row with more distributions
 st.markdown("### Additional Prior Distributions")
+
+sidebar_try_this(
+    "Example Prior Parameters",
+    "under **Student-t**: **t degrees of freedom** and **t scale**; under **Cauchy**: **Cauchy scale**; under **Laplace**: **Laplace scale**",
+)
 
 col_info4, col_info5, col_info6 = st.columns(3)
 
@@ -1438,6 +1528,15 @@ with col_info6:
 st.markdown("<div style='margin-bottom:150px;'></div>", unsafe_allow_html=True)
 st.markdown("---")
 st.markdown("## Model Comparison with Bayes Factors")
+
+st.info(
+    "**Try this:** Open the **sidebar** (arrow at top-left if it is hidden). "
+    "Scroll to these sections and adjust the controls:\n\n"
+    "- **Model Comparison - Bayes Factor:** **Null hypothesis value (β₀)**\n"
+    "- **Bayesian Prior - Slope:** **Prior mean for slope (μ_β)** and **Prior std dev for slope (τ_β)**\n"
+    "- **Data Generation:** **Sample size (n)**, **σ**, and **Regenerate Data**. "
+    "The Bayes factor and posterior evidence depend on the data you generate."
+)
 
 st.markdown("""
 **Question:** Is there evidence for a slope effect, or is β = 0?
